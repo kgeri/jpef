@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.jpef.common.TypeMap;
 import org.jpef.example.IntSumJoiner;
+import org.jpef.joiner.ArrayJoiner;
+import org.jpef.splitter.ArraySplitter;
 import org.jpef.splitter.ListSplitter;
 
 /**
@@ -16,6 +18,8 @@ import org.jpef.splitter.ListSplitter;
 public abstract class Parallel {
 	private static TypeMap<Splitter<?>> splitterManager;
 	private static TypeMap<Joiner<?>> joinerManager;
+	private static Splitter<?> arraySplitter = new ArraySplitter();
+	private static Joiner<?> arrayJoiner = new ArrayJoiner();
 
 	static {
 		// TODO IOC
@@ -45,6 +49,10 @@ public abstract class Parallel {
 	// TODO parallel invoke
 
 	static Joiner<?> getJoiner(Class<?> type) {
+		if (type.isArray()) {
+			return arrayJoiner;
+		}
+
 		Joiner<?> joiner = joinerManager.get(type);
 
 		if (joiner != null) {
@@ -55,6 +63,10 @@ public abstract class Parallel {
 	}
 
 	static Splitter<?> getSplitter(Class<?> type) {
-		return splitterManager.get(type);
+		if (type.isArray()) {
+			return arraySplitter;
+		} else {
+			return splitterManager.get(type);
+		}
 	}
 }

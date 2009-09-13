@@ -95,6 +95,7 @@ class ParallelInvocationHandler implements InvocationHandler {
 		}
 
 		if (splitNothing) {
+			// TODO warn
 			singleInvoke(method, arguments, futures);
 			return;
 		}

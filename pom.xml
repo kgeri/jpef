@@ -26,6 +26,14 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>1.5.8</version>
 		</dependency>
+		
+		<!-- Optional dependencies -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>0.9.17</version>
+			<optional>true</optional>
+		</dependency>
 
 		<!-- Test dependencies -->
 		<dependency>

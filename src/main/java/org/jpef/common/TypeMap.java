@@ -7,8 +7,8 @@ import java.util.HashMap;
  * 
  * @author Gergely Kiss
  * 
- * @param <T>
  * @param <S>
+ *            The base type stored in this map
  */
 public class TypeMap<S> extends HashMap<Class<?>, S> {
 	private boolean isKeyInheritable = true;
@@ -21,7 +21,6 @@ public class TypeMap<S> extends HashMap<Class<?>, S> {
 		if (value != null) {
 			return value;
 		}
-
 
 		if (isKeyInheritable) {
 			Class<?> type = ((Class<?>) key).getSuperclass();
@@ -39,13 +38,15 @@ public class TypeMap<S> extends HashMap<Class<?>, S> {
 
 		if (isKeyInterfaceable) {
 			Class<?> type = ((Class<?>) key).getSuperclass();
-			Class<?>[] ifaces = type.getInterfaces();
+			if (type != null) {
+				Class<?>[] ifaces = type.getInterfaces();
 
-			for (Class<?> iface : ifaces) {
-				value = super.get(iface);
+				for (Class<?> iface : ifaces) {
+					value = super.get(iface);
 
-				if (value != null) {
-					return value;
+					if (value != null) {
+						return value;
+					}
 				}
 			}
 		}

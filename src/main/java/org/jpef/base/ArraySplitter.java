@@ -1,4 +1,4 @@
-package org.jpef.splitter;
+package org.jpef.base;
 
 import java.lang.reflect.Array;
 

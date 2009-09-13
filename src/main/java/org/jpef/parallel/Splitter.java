@@ -7,12 +7,12 @@ package org.jpef.parallel;
  * Splitting means the input instance must be cut into two (preferably equally
  * sized) parts of the same type. If this is impossible for a given type, then
  * parallel execution of a method containing this type is not possible.
+ * <b>Implementations must always be stateless!</b>
  * </p>
  * 
  * <p>
- * Some generic splitter implementations may be found at
- * {@link org.jpef.splitter}, but most probably you will have to write your own
- * Splitter-Joiner pair.
+ * Some generic splitter implementations may be found at {@link org.jpef.base},
+ * but most probably you will have to write your own Splitter-Joiner pair.
  * </p>
  * 
  * @author Gergely Kiss

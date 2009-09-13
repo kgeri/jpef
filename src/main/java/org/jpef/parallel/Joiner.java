@@ -1,6 +1,6 @@
 package org.jpef.parallel;
 
-import org.jpef.joiner.ListJoiner;
+import org.jpef.base.ListJoiner;
 
 /**
  * An interface for joining solutions.
@@ -8,11 +8,12 @@ import org.jpef.joiner.ListJoiner;
  * <p>
  * Solution joining is as simple as merging two instances of the return type to
  * one. If this is impossible for a given type, then parallel execution of a
- * method returning this type is not possible.
+ * method returning this type is not possible. <b>Implementations must always be
+ * stateless!</b>
  * </p>
  * 
  * <p>
- * Some generic joiner implementations may be found at {@link org.jpef.joiner},
+ * Some generic joiner implementations may be found at {@link org.jpef.base},
  * but most probably you will have to write your own Splitter-Joiner pair.
  * </p>
  * 

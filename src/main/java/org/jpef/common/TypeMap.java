@@ -37,16 +37,9 @@ public class TypeMap<S> extends HashMap<Class<?>, S> {
 		}
 
 		if (isKeyInterfaceable) {
-			Class<?> type = ((Class<?>) key).getSuperclass();
-			if (type != null) {
-				Class<?>[] ifaces = type.getInterfaces();
-
-				for (Class<?> iface : ifaces) {
-					value = super.get(iface);
-
-					if (value != null) {
-						return value;
-					}
+			for (Class<?> type : keySet()) {
+				if (type.isAssignableFrom((Class<?>) key)) {
+					return super.get(type);
 				}
 			}
 		}

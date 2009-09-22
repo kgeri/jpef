@@ -34,6 +34,12 @@ class ParallelInvocationHandler implements InvocationHandler {
 	}
 
 	public Object invoke(Object proxy, Method method, Object[] arguments) throws Throwable {
+		if (arguments == null || arguments.length == 0) {
+			throw new IllegalArgumentException("Method '" + method.toGenericString()
+					+ "' does not have any arguments."
+					+ " Only methods with arguments may be parallelized.");
+		}
+
 		method.setAccessible(true);
 
 		List<Future<Object>> futures = new ArrayList<Future<Object>>(ctx.getMaxExecutors());
@@ -59,11 +65,19 @@ class ParallelInvocationHandler implements InvocationHandler {
 
 		// Splitting arguments
 		Object[][] splitArgs = new Object[2][arguments.length];
+		boolean noNonNullArgs = true;
 		boolean noSplitter = true;
 		boolean notSplit = true;
 
 		for (int i = 0; i < arguments.length; i++) {
 			Object argument = arguments[i];
+
+			// No argument, skipping
+			if (argument == null) {
+				continue;
+			}
+
+			noNonNullArgs = false;
 			Splitter splitter = ParallelManager.getSplitter(argument.getClass());
 
 			if (splitter == null) {
@@ -88,7 +102,13 @@ class ParallelInvocationHandler implements InvocationHandler {
 			}
 		}
 
-		if (noSplitter) {
+		if (noNonNullArgs) {
+			// No argument was split, because everything was null
+			log.debug("Arguments were null, can't split anything: {}", method.toGenericString());
+
+			singleInvoke(method, arguments, futures);
+			return;
+		} else if (noSplitter) {
 			// No argument was split, this is most possibly a misconfiguration
 			log.warn("No splitters were found for any of the arguments for the method: {}", method
 					.toGenericString());
@@ -131,12 +151,6 @@ class ParallelInvocationHandler implements InvocationHandler {
 	 */
 	private Object joinInvoke(Method method, Collection<Future<Object>> futures)
 			throws ExecutionException, InterruptedException {
-
-		if (futures.size() == 0) {
-			// The Impossible Has Happened
-			throw new IllegalStateException("Unexpected error: no results found");
-		}
-
 		Object[] results = new Object[futures.size()];
 		int cnt = 0;
 

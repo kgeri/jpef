@@ -15,8 +15,8 @@ public class ListSplitter implements Splitter<List> {
 		int len = input.size();
 		int center = len / 2;
 
-		if (center == 0) {
-			return new List[] { input, null };
+		if (len < 2) {
+			return null;
 		}
 
 		return new List[] { input.subList(0, center), input.subList(center, len) };

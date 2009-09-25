@@ -4,20 +4,86 @@
 	<groupId>org.jpef</groupId>
 	<artifactId>jpef</artifactId>
 	<version>0.1.0-SNAPSHOT</version>
+
 	<inceptionYear>2009</inceptionYear>
 	<name>JPEF</name>
-	<description>A simple API for parallel execution of existing single-threaded code</description>
+	<description>A simple API for parallel execution of existing
+		single-threaded code</description>
+
 	<build>
 		<plugins>
+
+			<!-- Source level -->
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
 					<source>1.5</source>
 					<target>1.5</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+
+			<!-- EMMA code coverage -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>emma-maven-plugin</artifactId>
+				<version>1.0-alpha-2</version>
+				<inherited>true</inherited>
+				<executions>
+					<execution>
+						<id>instrument</id>
+						<phase>pre-site</phase>
+						<goals>
+							<goal>instrument</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Surefire settings for EMMA -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<inherited>true</inherited>
+				<configuration>
+					<forkMode>once</forkMode>
+					<reportFormat>xml</reportFormat>
+					<classesDirectory>${project.build.directory}/generated-classes/emma/classes
+					</classesDirectory>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
+
+	<!-- Reporting plugins -->
+	<reporting>
+
+		<plugins>
+			<!-- EMMA code coverage -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>emma-maven-plugin</artifactId>
+				<version>1.0-alpha-2</version>
+				<inherited>true</inherited>
+			</plugin>
+
+			<!-- PMD code analysis -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<sourceEncoding>utf-8</sourceEncoding>
+					<minimumTokens>100</minimumTokens>
+					<targetJdk>1.5</targetJdk>
+					<excludeRoots>
+						<excludeRoot>target/generated-sources</excludeRoot>
+					</excludeRoots>
+				</configuration>
+			</plugin>
+		</plugins>
+
+	</reporting>
 
 	<dependencies>
 		<!-- Logging -->
@@ -26,7 +92,7 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>1.5.8</version>
 		</dependency>
-		
+
 		<!-- Optional dependencies -->
 		<dependency>
 			<groupId>ch.qos.logback</groupId>

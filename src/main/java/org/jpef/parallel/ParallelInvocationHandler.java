@@ -180,6 +180,8 @@ class ParallelInvocationHandler implements InvocationHandler {
 					results[i] = joiner.join(results[i * 2], results[i * 2 + 1]);
 				} else {
 					// Setting tail
+					// Note: effectively never happens because futures.size is
+					// always some 2^x value, code is left here for robustness
 					results[i] = results[i * 2 + 1];
 				}
 			}

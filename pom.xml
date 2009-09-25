@@ -46,10 +46,8 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<inherited>true</inherited>
 				<configuration>
-					<forkMode>once</forkMode>
+					<forkMode>always</forkMode>
 					<reportFormat>xml</reportFormat>
-					<classesDirectory>${project.build.directory}/generated-classes/emma/classes
-					</classesDirectory>
 				</configuration>
 			</plugin>
 		</plugins>

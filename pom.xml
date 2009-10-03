@@ -22,34 +22,6 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
-
-			<!-- EMMA code coverage -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>emma-maven-plugin</artifactId>
-				<version>1.0-alpha-2</version>
-				<inherited>true</inherited>
-				<executions>
-					<execution>
-						<id>instrument</id>
-						<phase>pre-site</phase>
-						<goals>
-							<goal>instrument</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
-			<!-- Surefire settings for EMMA -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<inherited>true</inherited>
-				<configuration>
-					<forkMode>always</forkMode>
-					<reportFormat>xml</reportFormat>
-				</configuration>
-			</plugin>
 		</plugins>
 	</build>
 

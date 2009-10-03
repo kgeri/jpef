@@ -13,8 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An invocation handler for managing parallel execution of a single method
- * call.
+ * A handler for managing parallel execution of a single method call.
  * 
  * @author Gergely Kiss
  */
@@ -52,7 +51,7 @@ class ParallelInvocationHandler implements InvocationHandler {
 	}
 
 	/*
-	 * Splits the metod invocation recursively.
+	 * Splits the method invocation recursively.
 	 */
 	private void splitInvoke(Method method, Object[] arguments, int level,
 			Collection<Future<Object>> futures) throws Throwable {

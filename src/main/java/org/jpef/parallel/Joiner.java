@@ -1,7 +1,5 @@
 package org.jpef.parallel;
 
-import org.jpef.base.ListJoiner;
-
 /**
  * An interface for joining solutions.
  * 
@@ -30,7 +28,8 @@ public interface Joiner<S> {
 	 * 
 	 * <p>
 	 * Note: the first instance of the solution may be reused and returned, if
-	 * its implementation makes it possible. For details see {@link ListJoiner}.
+	 * its implementation makes it possible. For details see
+	 * {@link org.jpef.base.ListJoiner}.
 	 * </p>
 	 * 
 	 * <p>

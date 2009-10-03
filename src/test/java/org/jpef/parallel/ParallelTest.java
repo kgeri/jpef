@@ -6,8 +6,9 @@ import static org.junit.Assert.fail;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 
-import org.jpef.example.IntSumJoiner;
 import org.junit.Test;
+
+import example.IntSumJoiner;
 
 /**
  * Different parallel execution test cases.
